@@ -36,8 +36,33 @@ a{color:var(--blue-dk)}
 .intro{max-width:760px;margin:0 auto;padding:clamp(32px,6vw,56px) clamp(20px,4vw,40px) 8px;text-align:center}
 .intro p{font-family:var(--serif);font-size:clamp(20px,2.4vw,24px);line-height:1.5;margin:0;color:var(--ink)}
 .intro .badge{display:inline-block;margin-top:18px;font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-dk);border:1px solid var(--blue);border-radius:999px;padding:7px 14px}
-.gallery{max-width:1000px;margin:28px auto 0;padding:0 clamp(20px,4vw,40px);display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.gallery img{height:auto;width:100%;aspect-ratio:3/2;object-fit:cover;display:block;border-radius:4px}
+.hero-photos{display:inline-block;margin-top:16px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.75);border-radius:999px;padding:8px 16px;background:rgba(30,34,48,.18);backdrop-filter:blur(2px)}
+.hero-photos:hover{background:rgba(255,255,255,.18)}
+.photos{max-width:1100px;margin:0 auto;padding:clamp(36px,6vw,56px) clamp(16px,4vw,40px) 0;scroll-margin-top:12px}
+.photos-head{text-align:center;margin-bottom:22px}
+.photos-title{font-family:var(--serif);font-weight:400;color:var(--blue-dk);font-size:clamp(28px,4vw,40px);line-height:1.1;margin:0 0 6px;letter-spacing:.01em}
+.photos-sub{margin:0;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+.ph-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ph-item{display:block;position:relative;overflow:hidden;border-radius:4px;background:#ECE8DE;aspect-ratio:3/2;cursor:zoom-in}
+.ph-item img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease,opacity .3s}
+.ph-item:hover img{transform:scale(1.035)}
+.ph-item:focus-visible{outline:2px solid var(--blue-dk);outline-offset:3px}
+.ph-grid:not(.is-open) .ph-item:nth-child(n+10){display:none}
+.ph-more-wrap{text-align:center;margin-top:22px}
+.ph-more{background:transparent;border:1px solid var(--blue);color:var(--blue-dk);font:inherit;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:12px 26px;border-radius:999px;cursor:pointer}
+.ph-more:hover{background:var(--blue);color:#fff}
+.lb{position:fixed;inset:0;z-index:1000;background:rgba(24,27,38,.97);display:flex;align-items:center;justify-content:center;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.lb-fig{margin:0;display:flex;flex-direction:column;align-items:center;max-width:calc(100vw - 140px)}
+.lb-img{display:block;max-width:100%;max-height:calc(100vh - 110px);max-height:calc(100dvh - 110px);width:auto;height:auto;object-fit:contain;border-radius:3px;box-shadow:0 10px 40px rgba(0,0,0,.35);transition:opacity .2s}
+.lb-img.is-loading{opacity:.35}
+.lb-cap{color:#F8F5EE;font-family:var(--serif);font-size:19px;line-height:1.35;text-align:center;padding:14px 12px 0;display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;align-items:baseline}
+.lb-count{font-family:var(--sans);font-size:12px;letter-spacing:.14em;color:#B9BFD2}
+.lb-btn{position:absolute;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.28);color:#fff;width:48px;height:48px;border-radius:50%;font-size:30px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 0 3px}
+.lb-btn:hover{background:rgba(255,255,255,.2)}
+.lb-close{top:16px;right:16px;font-size:28px}
+.lb-prev{left:18px;top:50%;transform:translateY(-50%)}
+.lb-next{right:18px;top:50%;transform:translateY(-50%)}
+body.lb-open{overflow:hidden}
 .book{padding:clamp(24px,5vw,48px) clamp(12px,3vw,24px) 24px}
 #vh-book{background:transparent!important}
 .site-foot{text-align:center;padding:36px 20px 48px;font-size:13px;color:#6B6F7D;border-top:1px solid var(--line);max-width:1100px;margin:24px auto 0}
@@ -45,10 +70,15 @@ a{color:var(--blue-dk)}
 .site-foot .mark{font-family:var(--serif);font-size:20px;letter-spacing:.3em;color:var(--blue);margin-bottom:8px}
 @media (max-width:600px){
  .site-head{padding:16px 18px} .back{font-size:11px;letter-spacing:.08em}
- .gallery{grid-template-columns:repeat(3,1fr);gap:6px}
  .facts{font-size:13px}
  .hero-img{height:420px}
  .hero-cap{padding:22px 20px}
+ .ph-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+ .ph-grid:not(.is-open) .ph-item:nth-child(n+7){display:none}
+ .lb-fig{max-width:100vw}
+ .lb-img{max-height:calc(100vh - 150px);max-height:calc(100dvh - 150px);border-radius:0}
+ .lb-prev,.lb-next{top:auto;bottom:18px;transform:none;width:44px;height:44px}
+ .lb-cap{font-size:17px;padding:12px 64px 0}
 }
 </style>
 </head>
@@ -64,6 +94,7 @@ a{color:var(--blue-dk)}
     <p class="eyebrow">Book direct · Poulsbo, Washington</p>
     <h1>Nordic Cove</h1>
     <p class="facts">Sleeps 6 · 3 bedrooms · 1.5 baths · ★ 5.0 (170 reviews)</p>
+    <a class="hero-photos" href="#photos" id="hero-photos">View all 38 photos</a>
   </div>
 </section>
 
@@ -72,10 +103,62 @@ a{color:var(--blue-dk)}
   <span class="badge">Guest Favorite</span>
 </section>
 
-<div class="gallery" aria-label="Nordic Cove photos">
-  <img src="assets/photo-02.jpg" alt="Living room with fireplace and bay view" loading="lazy" width="900" height="600">
-  <img src="assets/photo-01.jpg" alt="Sunlit dining room" loading="lazy" width="900" height="600">
-  <img src="assets/photo-03.jpg" alt="Modern white kitchen" loading="lazy" width="900" height="600">
+<section class="photos" id="photos" aria-labelledby="photos-title">
+  <div class="photos-head">
+    <h2 class="photos-title" id="photos-title">Photos</h2>
+    <p class="photos-sub">38 photos · tap any to enlarge</p>
+  </div>
+  <div class="ph-grid" id="ph-grid">
+    <a class="ph-item" href="assets/gallery/01.jpg" data-w="1440" data-h="960"><img src="assets/photo-01.jpg" alt="Sunlit dining room wrapped in windows" loading="lazy" decoding="async" width="900" height="600"></a>
+    <a class="ph-item" href="assets/gallery/02.jpg" data-w="1440" data-h="960"><img src="assets/photo-02.jpg" alt="Living room with fireplace and Liberty Bay view" loading="lazy" decoding="async" width="900" height="600"></a>
+    <a class="ph-item" href="assets/gallery/03.jpg" data-w="1440" data-h="960"><img src="assets/photo-03.jpg" alt="Bright white kitchen with stainless appliances" loading="lazy" decoding="async" width="900" height="600"></a>
+    <a class="ph-item" href="assets/hero.jpg" data-w="1920" data-h="1280"><img src="assets/hero.jpg" alt="Adirondack chairs on the deck overlooking Liberty Bay" loading="lazy" decoding="async" width="1920" height="1280"></a>
+    <a class="ph-item" href="assets/gallery/05.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/05.jpg" alt="Front entry and brick patio" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/06.jpg" data-w="1440" data-h="953"><img src="assets/gallery/thumb/06.jpg" alt="Entry with cozy window seat" loading="lazy" decoding="async" width="600" height="397"></a>
+    <a class="ph-item" href="assets/gallery/07.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/07.jpg" alt="Sectional sofa facing the water-view window" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/08.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/08.jpg" alt="Living room with fireplace and gallery wall" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/09.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/09.jpg" alt="Dining table with views of the bay" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/10.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/10.jpg" alt="Kitchen with quartz counters and gas range" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/11.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/11.jpg" alt="Kitchen looking toward the window seat" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/12.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/12.jpg" alt="Coffee station in the kitchen" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/13.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/13.jpg" alt="Gas range with kettle" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/14.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/14.jpg" alt="Kitchen detail" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/15.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/15.jpg" alt="Living room details" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/16.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/16.jpg" alt="Bedroom with daybed, TV, and reading lamp" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/17.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/17.jpg" alt="Daybed by the garden windows" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/18.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/18.jpg" alt="Bedroom and window seat" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/19.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/19.jpg" alt="Primary bedroom with king bed" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/20.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/20.jpg" alt="Bedroom with water-view window" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/21.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/21.jpg" alt="Half bath" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/22.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/22.jpg" alt="Bathroom details" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/23.jpg" data-w="1440" data-h="971"><img src="assets/gallery/thumb/23.jpg" alt="Built-in shelves with books and games" loading="lazy" decoding="async" width="600" height="405"></a>
+    <a class="ph-item" href="assets/gallery/24.jpg" data-w="1440" data-h="952"><img src="assets/gallery/thumb/24.jpg" alt="Bedroom with queen bed" loading="lazy" decoding="async" width="600" height="397"></a>
+    <a class="ph-item" href="assets/gallery/25.jpg" data-w="1440" data-h="960"><img src="assets/gallery/thumb/25.jpg" alt="Bedroom with tufted headboard" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/26.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/26.jpg" alt="Linen closet" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/27.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/27.jpg" alt="Full bathroom with tub and shower" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/28.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/28.jpg" alt="Laundry room with washer and dryer" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/29.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/29.jpg" alt="Window seat nook" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/30.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/30.jpg" alt="Scandinavian Dala horse decor" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/31.jpg" data-w="1440" data-h="1080"><img src="assets/gallery/thumb/31.jpg" alt="Liberty Bay Water View Home" loading="lazy" decoding="async" width="600" height="450"></a>
+    <a class="ph-item" href="assets/gallery/32.jpg" data-w="1440" data-h="2160"><img src="assets/gallery/thumb/32.jpg" alt="Console with bay-side décor" loading="lazy" decoding="async" width="600" height="900"></a>
+    <a class="ph-item" href="assets/gallery/33.jpg" data-w="1440" data-h="2101"><img src="assets/gallery/thumb/33.jpg" alt="5 minute drive to historic downtown Poulsbo | Shops, Restaurants, and Activities" loading="lazy" decoding="async" width="600" height="875"></a>
+    <a class="ph-item" href="assets/gallery/34.jpg" data-w="1440" data-h="959"><img src="assets/gallery/thumb/34.jpg" alt="5 minute drive to historic downtown Poulsbo | Shops, Restaurants, and Activities" loading="lazy" decoding="async" width="600" height="400"></a>
+    <a class="ph-item" href="assets/gallery/35.jpg" data-w="1440" data-h="990"><img src="assets/gallery/thumb/35.jpg" alt="5 minute drive to historic downtown Poulsbo | Shops, Restaurants, and Activities" loading="lazy" decoding="async" width="600" height="412"></a>
+    <a class="ph-item" href="assets/gallery/36.jpg" data-w="1440" data-h="958"><img src="assets/gallery/thumb/36.jpg" alt="5 minute drive to historic downtown Poulsbo | Shops, Restaurants, and Activities" loading="lazy" decoding="async" width="600" height="399"></a>
+    <a class="ph-item" href="assets/gallery/37.jpg" data-w="1440" data-h="953"><img src="assets/gallery/thumb/37.jpg" alt="5 minute drive to historic downtown Poulsbo | Shops, Restaurants, and Activities" loading="lazy" decoding="async" width="600" height="397"></a>
+    <a class="ph-item" href="assets/gallery/38.jpg" data-w="1440" data-h="703"><img src="assets/gallery/thumb/38.jpg" alt="Nighttime views of the bay" loading="lazy" decoding="async" width="600" height="293"></a>
+  </div>
+  <div class="ph-more-wrap"><button type="button" class="ph-more" id="ph-more" aria-controls="ph-grid" aria-expanded="false">Show all 38 photos</button></div>
+</section>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Close photo viewer">&times;</button>
+  <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Previous photo">&#8249;</button>
+  <figure class="lb-fig">
+    <img class="lb-img" id="lb-img" alt="">
+    <figcaption class="lb-cap"><span id="lb-cap"></span><span class="lb-count" id="lb-count"></span></figcaption>
+  </figure>
+  <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Next photo">&#8250;</button>
 </div>
 
 <main class="book" id="book">
@@ -83,6 +166,8 @@ a{color:var(--blue-dk)}
   <div class="vh-head">
     <h2 class="vh-title">Check availability</h2>
     <p class="vh-sub">Nordic Cove · select your check-in, then check-out date</p>
+    <p class="vh-from" id="vh-from" hidden></p>
+    <p class="vh-direct" id="vh-direct" hidden>Direct booking rate — up to 15% less than Airbnb &amp; Vrbo.</p>
   </div>
 
   <div class="vh-cal" aria-live="polite">
@@ -101,6 +186,7 @@ a{color:var(--blue-dk)}
       <span><i class="vh-sw vh-sw-sel"></i>Your stay</span>
     </div>
     <p class="vh-status" id="vh-status"></p>
+    <div class="vh-est" id="vh-est" hidden></div>
     <button type="button" class="vh-link" id="vh-clear" hidden>Clear dates</button>
   </div>
 
@@ -178,7 +264,19 @@ a{color:var(--blue-dk)}
 #vh-book .vh-form-msg{min-height:1.4em;margin:12px 0 0;text-align:center;font-size:15px}
 #vh-book .vh-form-msg.vh-err{color:#A04848}
 #vh-book .vh-fine{font-size:12px;color:#8A8D98;text-align:center;margin:6px 0 0}
-@media (max-width:600px){#vh-book .vh-row{grid-template-columns:1fr}#vh-book .vh-cal{padding:14px 10px}#vh-book .vh-day{font-size:14px;min-height:34px}}
+#vh-book .vh-day{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+#vh-book .vh-dn{display:block}
+#vh-book .vh-pr{display:block;font-size:11px;letter-spacing:.02em;color:var(--vh-blue-dk);margin-top:2px;font-weight:400}
+#vh-book .vh-day.vh-start .vh-pr,#vh-book .vh-day.vh-end .vh-pr{color:#fff;opacity:.9}
+#vh-book .vh-from{margin:10px 0 0;font-family:var(--vh-head);font-size:20px;color:var(--vh-ink)}
+#vh-book .vh-direct{margin:2px 0 0;font-size:12px;letter-spacing:.04em;color:#6B6F7D}
+#vh-book .vh-est{margin:14px auto 0;max-width:420px;border-top:1px solid var(--vh-line);padding-top:12px;font-size:14px;color:var(--vh-ink)}
+#vh-book .vh-est-row{display:flex;justify-content:space-between;gap:12px;padding:3px 0}
+#vh-book .vh-est-row span:first-child{color:#6B6F7D}
+#vh-book .vh-est-total{border-top:1px solid var(--vh-line);margin-top:6px;padding-top:8px;font-family:var(--vh-head);font-size:20px}
+#vh-book .vh-est-total span:first-child{color:var(--vh-ink)}
+#vh-book .vh-est-note{font-size:12px;color:#8A8D98;text-align:center;margin:8px 0 0}
+@media (max-width:600px){#vh-book .vh-row{grid-template-columns:1fr}#vh-book .vh-cal{padding:14px 10px}#vh-book .vh-grid{gap:3px}#vh-book .vh-day{font-size:13px;min-height:34px}#vh-book .vh-pr{font-size:9px;letter-spacing:0;margin-top:1px}#vh-book .vh-from{font-size:18px}}
 </style>
 
 <script>
@@ -219,6 +317,44 @@ a{color:var(--blue-dk)}
   function canCheckIn(d) { return d >= todayIso && !isBooked(d); }
   function canCheckOut(d) { return checkIn && d > checkIn && nights(checkIn, d) >= MIN_NIGHTS && rangeFree(checkIn, d); }
 
+  // --- nightly rates (rates.json, base/direct prices; no markups) ---
+  var RATES = null;
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function priceFor(d) { return RATES && RATES.nightly && typeof RATES.nightly[d] === 'number' ? RATES.nightly[d] : null; }
+  function estimate() {
+    if (!RATES || !checkIn || !checkOut) return null;
+    var list = [];
+    for (var d = checkIn; d < checkOut; d = addDays(d, 1)) { var p = priceFor(d); if (p == null) return { missing: true }; list.push(p); }
+    var sub = list.reduce(function (a, b) { return a + b; }, 0), clean = Number(RATES.cleaning) || 0;
+    var same = list.every(function (p) { return p === list[0]; });
+    var desc = list.length + ' night' + (list.length > 1 ? 's' : '') + ' × ' +
+      (same ? money(list[0]) : (list.length <= 5 ? list.map(money).join(' + ') : 'avg ' + money(sub / list.length)));
+    return { nights: list.length, desc: desc, subtotal: sub, cleaning: clean, total: sub + clean };
+  }
+  function estimateText() {
+    var e = estimate(); if (!e || e.missing) return '';
+    return e.desc + ' = ' + money(e.subtotal) + '; + ' + money(e.cleaning) + ' cleaning; total ' + money(e.total) + ' (estimate before taxes)';
+  }
+  function renderEstimate() {
+    var box = $('vh-est'), e = estimate();
+    if (!e) { box.hidden = true; box.innerHTML = ''; return; }
+    var note = '<p class="vh-est-note">Estimate before taxes; final quote confirmed by email.' +
+      (RATES.petFee ? ' Pets +' + money(RATES.petFee) + '/night.' : '') + '</p>';
+    if (e.missing) { box.innerHTML = '<p class="vh-est-note">Rates for some of these nights aren\'t posted yet — we\'ll quote by email.</p>'; box.hidden = false; return; }
+    box.innerHTML =
+      '<div class="vh-est-row"><span>' + e.desc + '</span><span>' + money(e.subtotal) + '</span></div>' +
+      '<div class="vh-est-row"><span>Cleaning</span><span>+ ' + money(e.cleaning) + '</span></div>' +
+      '<div class="vh-est-row vh-est-total"><span>Total</span><span>' + money(e.total) + '</span></div>' + note;
+    box.hidden = false;
+  }
+  function renderFrom() {
+    if (!RATES || !RATES.nightly) return;
+    var vals = Object.keys(RATES.nightly).filter(function (d) { return d >= todayIso; }).map(function (d) { return RATES.nightly[d]; });
+    if (!vals.length) return;
+    $('vh-from').textContent = 'From ' + money(Math.min.apply(null, vals)) + '/night · ' + MIN_NIGHTS + '-night minimum';
+    $('vh-from').hidden = false; $('vh-direct').hidden = false;
+  }
+
   function setStatus(t) { $('vh-status').textContent = t || ''; }
 
   function render() {
@@ -232,7 +368,8 @@ a{color:var(--blue-dk)}
     var endSel = checkOut || (checkIn && hover && canCheckOut(hover) ? hover : null);
     for (var day = 1; day <= count; day++) {
       var d = iso(new Date(y, m, day));
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'vh-day'; b.textContent = day; b.dataset.date = d;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'vh-day'; b.dataset.date = d;
+      var dn = document.createElement('span'); dn.className = 'vh-dn'; dn.textContent = day; b.appendChild(dn);
       var past = d < todayIso, booked = isBooked(d);
       var prevBooked = isBooked(addDays(d, -1));
       var label = pretty(d);
@@ -243,7 +380,11 @@ a{color:var(--blue-dk)}
         var coOk = checkIn && !checkOut && canCheckOut(d);
         if (coOk && !prevBooked) { b.classList.add('vh-co-only'); label += ', check-out only'; }
         else { b.classList.add('vh-booked'); b.disabled = true; label += ', booked'; }
-      } else label += ', available';
+      } else {
+        label += ', available';
+        var pr = priceFor(d);
+        if (pr != null) { var ps = document.createElement('span'); ps.className = 'vh-pr'; ps.textContent = money(pr); b.appendChild(ps); label += ', ' + money(pr) + ' per night'; }
+      }
       if (checkIn && d === checkIn) b.classList.add('vh-start');
       if (endSel && d === endSel) b.classList.add('vh-end');
       if (checkIn && endSel && d > checkIn && d < endSel) b.classList.add('vh-range');
@@ -252,6 +393,7 @@ a{color:var(--blue-dk)}
       grid.appendChild(b);
     }
     $('vh-clear').hidden = !checkIn;
+    renderEstimate();
   }
 
   function syncForm() {
@@ -328,6 +470,15 @@ a{color:var(--blue-dk)}
   }
   syncForm(); render();
 
+  fetch('rates.json?v=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (r) {
+      RATES = r;
+      if (typeof r.minNights === 'number' && r.minNights >= 1) MIN_NIGHTS = r.minNights;
+      renderFrom(); syncForm(); render();
+    })
+    .catch(function () { /* no prices shown; calendar still works */ });
+
   // --- submit ---
   $('vh-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -339,10 +490,11 @@ a{color:var(--blue-dk)}
               data.checkout <= data.checkin ? 'Check-out must be after check-in.' :
               (Object.keys(bookedNights).length && !rangeFree(data.checkin, data.checkout)) ? 'Those dates include booked nights.' : '';
     if (err) { msg.textContent = err; msg.classList.add('vh-err'); return; }
+    if (checkIn === data.checkin && checkOut === data.checkout) { var est = estimateText(); if (est) data.estimate = est; }
 
     if (SUBMIT_MODE === 'mailto' || !configured) {
       var body = 'Name: ' + data.name + '\nEmail: ' + data.email + '\nPhone: ' + data.phone +
-                 '\nCheck-in: ' + data.checkin + '\nCheck-out: ' + data.checkout + '\nGuests: ' + data.guests + '\n\n' + data.message;
+                 '\nCheck-in: ' + data.checkin + '\nCheck-out: ' + data.checkout + '\nGuests: ' + data.guests + (data.estimate ? '\nEstimate: ' + data.estimate : '') + '\n\n' + data.message;
       window.location.href = 'mailto:' + MAILTO_ADDRESS + '?subject=' + encodeURIComponent('Book Direct request – Nordic Cove ' + data.checkin + ' to ' + data.checkout) + '&body=' + encodeURIComponent(body);
       msg.textContent = 'Your email app should open with the request filled in — just hit send.';
       return;
@@ -368,5 +520,70 @@ a{color:var(--blue-dk)}
   <div class="mark">VEACH HAUS</div>
   <a href="https://www.veachhaus.com">veachhaus.com</a> · <a href="https://www.veachhaus.com/stays/liberty-bay">Nordic Cove</a>
 </footer>
+<script>
+(function () {
+  var grid = document.getElementById('ph-grid'), lb = document.getElementById('lb');
+  if (!grid || !lb) return;
+  var items = Array.prototype.slice.call(grid.querySelectorAll('.ph-item'));
+  var img = document.getElementById('lb-img'), cap = document.getElementById('lb-cap'), count = document.getElementById('lb-count');
+  var more = document.getElementById('ph-more');
+  var cur = 0, lastFocus = null, cache = {};
+  function data(i) { var a = items[i], t = a.querySelector('img'); return { src: a.getAttribute('href'), alt: t.getAttribute('alt') || '' }; }
+  function preload(i) { i = (i + items.length) % items.length; var s = data(i).src; if (!cache[s]) { cache[s] = new Image(); cache[s].src = s; } }
+  function show(i) {
+    cur = (i + items.length) % items.length;
+    var d = data(cur);
+    img.classList.add('is-loading');
+    img.onload = function () { img.classList.remove('is-loading'); };
+    img.src = d.src; img.alt = d.alt;
+    if (img.complete) img.classList.remove('is-loading');
+    cap.textContent = d.alt; count.textContent = (cur + 1) + ' / ' + items.length;
+    preload(cur + 1); preload(cur - 1);
+  }
+  function open(i) {
+    lastFocus = document.activeElement;
+    lb.hidden = false; document.body.classList.add('lb-open');
+    show(i); document.getElementById('lb-close').focus();
+  }
+  function close() {
+    lb.hidden = true; document.body.classList.remove('lb-open'); img.removeAttribute('src');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  items.forEach(function (a, i) {
+    a.addEventListener('click', function (e) { if (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return; e.preventDefault(); open(i); });
+  });
+  if (more) more.addEventListener('click', function () {
+    var on = grid.classList.toggle('is-open');
+    more.setAttribute('aria-expanded', on ? 'true' : 'false');
+    more.textContent = on ? 'Show fewer photos' : 'Show all ' + items.length + ' photos';
+    if (!on) document.getElementById('photos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  var heroLink = document.getElementById('hero-photos');
+  if (heroLink) heroLink.addEventListener('click', function (e) { e.preventDefault(); open(0); });
+  document.getElementById('lb-close').addEventListener('click', close);
+  document.getElementById('lb-prev').addEventListener('click', function () { show(cur - 1); });
+  document.getElementById('lb-next').addEventListener('click', function () { show(cur + 1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target.classList.contains('lb-fig')) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); show(cur + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); show(cur - 1); }
+    else if (e.key === 'Tab') { // keep focus inside the viewer
+      var f = lb.querySelectorAll('button'), first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  var sx = null, sy = null;
+  lb.addEventListener('touchstart', function (e) { if (e.touches.length === 1) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; } }, { passive: true });
+  lb.addEventListener('touchend', function (e) {
+    if (sx === null) return;
+    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) show(cur + (dx < 0 ? 1 : -1));
+    else if (dy > 90 && Math.abs(dy) > Math.abs(dx) * 1.5) close();
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
